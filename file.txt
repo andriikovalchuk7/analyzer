@@ -1,0 +1,6 @@
+var a = 10;
+if a < 109
+    a = 111;
+    else
+    var z = 10;
+end;
