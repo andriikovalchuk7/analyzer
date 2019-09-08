@@ -1,6 +1,6 @@
 import re
 
-operators = ['=', '+', '-', '*', '/', '<', '>', '==', '!=', 'from', 'to', 'do', 'return', 'if', 'else', 'end', 'var']
+operators = ['=', '+', '-', '*', '/', '<', '>', '==', '!=', 'iterate', 'times', 'finish', 'return', 'if', 'else', 'end', 'var']
 numerals = r'[0-9]+'
 variable_usage = r''
 prohibited = ['!', '@', '#', '&', '\\', '.', '\n']

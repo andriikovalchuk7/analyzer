@@ -43,6 +43,13 @@ def syntax_analyzer(program, lexem_hash, identifier_hash, const_hash):
             else:
                 print(f"Invalid assignment operation on row {lexem_hash[i][0]}")
                 return
+        if lexem == 'iterate':
+            iterate_check = iterate_validation(i, lexem_hash)
+            if iterate_check == 0:
+                continue
+            else:
+                print(iterate_check)
+                return
         if lexem.isdigit():
             continue
         if lexem in op.operators:
@@ -51,7 +58,6 @@ def syntax_analyzer(program, lexem_hash, identifier_hash, const_hash):
             if not identifier_declared(i, lexem_hash):
                 if identifiers.count(lexem) == 0:
                     print(f"Identifier {lexem} is not declared on row {lexem_hash[i][0]}")
-
 
 
 def logical_expression_exists(lexem_hash, index, identifier_hash):
@@ -75,6 +81,19 @@ def logical_expression_exists(lexem_hash, index, identifier_hash):
         return False
 
 
+def iterate_validation(index, lexem_hash):
+    following_lexem = lexem_hash[index + 1][1]
+    if not following_lexem.isdigit():
+        if not identifier_declared(index + 1, lexem_hash):
+            return f"Iterator on row {lexem_hash[index][0]} is not valid"
+    if not lexem_hash[index + 2][1] == 'times':
+        return f"Missing times keyword on row {lexem_hash[index][0]}"
+    if not iteration_closing(lexem_hash, index):
+        return f"Finish operator is not valid or missing"
+    else:
+        return 0
+
+
 def valid_logical_operand(operand, identifier_hash):
     if operand.isdigit() or identifier_exists(operand, identifier_hash):
         return True
@@ -95,6 +114,37 @@ def seek_for_else(lexem_hash, row):
         if lexem_hash[i][1] == 'else':
             elses_counter = elses_counter + 1
     if elses_counter == ifs_counter:
+        return True
+    else:
+        return False
+
+
+def seek_for_iterate(lexem_hash, row):
+    paired = False
+    if row == 0:
+        return False
+    for i in range(row, - 1, - 1):
+        if i < 0 :
+            break
+        if lexem_hash[i][1] == 'finish':
+            paired = True
+            return paired
+    return paired
+
+
+def iteration_closing(lexem_hash, row):
+    if row == 0:
+        return False
+    iterates_counter = 0
+    finish_counter = 0
+    for i in range(row, len(lexem_hash) - 1):
+        if i < 0:
+            break
+        if lexem_hash[i][1] == 'iterate':
+            iterates_counter = iterates_counter + 1
+        if lexem_hash[i][1] == 'finish':
+            finish_counter = finish_counter + 1
+    if iterates_counter == finish_counter:
         return True
     else:
         return False

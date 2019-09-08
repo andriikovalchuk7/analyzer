@@ -67,9 +67,9 @@ def xls_write(lexem_hash,identifier_hash,const_hash):
         writer = csv.writer(writeFile)
         writer.writerows(array_consts)
         writer.writerows(const_hash)
-    merge_all_to_a_book(glob.glob("csv\\lexems.csv"), "xls\\lexems.xlsx")
-    merge_all_to_a_book(glob.glob("csv\\identifiers.csv"), "xls\\identifiers.xlsx")
-    merge_all_to_a_book(glob.glob("csv\\consts.csv"), "xls\\consts.xlsx")
+    #merge_all_to_a_book(glob.glob("csv\\lexems.csv"), "xls\\lexems.xlsx")
+    #merge_all_to_a_book(glob.glob("csv\\identifiers.csv"), "xls\\identifiers.xlsx")
+    #merge_all_to_a_book(glob.glob("csv\\consts.csv"), "xls\\consts.xlsx")
 
 
 def identifier_id(hash, lexem):
@@ -104,6 +104,10 @@ def check_for_prohibits(lexem):
 
 def check_if_delimiter_presented(row):
     if row.find('if') != -1:
+        return row
+    if row.find('iterate') != -1:
+        return row
+    if row.find('finish') != -1:
         return row
     if row.find('else') != -1:
         return row
