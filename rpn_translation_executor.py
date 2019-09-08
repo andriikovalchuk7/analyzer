@@ -1,27 +1,36 @@
 
 LEFT_ASSOC = 0
 RIGHT_ASSOC = 1
-
 OPERATORS = {
-    '(': (0, LEFT_ASSOC),
-    'if': (0, LEFT_ASSOC),
-    'iterate': (0, LEFT_ASSOC),
-    ')': (2, LEFT_ASSOC),
-    'finish': (2, LEFT_ASSOC),
-    '=': (3, LEFT_ASSOC),
-    'var': (4, LEFT_ASSOC),
-    '<': (5, LEFT_ASSOC),
-    '>': (5, LEFT_ASSOC),
-    '<=': (5, LEFT_ASSOC),
-    '>=': (5, LEFT_ASSOC),
-    '!=': (5, LEFT_ASSOC),
-    '+': (6, LEFT_ASSOC),
-    '-': (6, LEFT_ASSOC),
-    '*': (8, LEFT_ASSOC),
-    '/': (8, LEFT_ASSOC),
-    '%': (8, LEFT_ASSOC),
+    '+': (0, LEFT_ASSOC),
+    '-': (0, LEFT_ASSOC),
+    '*': (5, LEFT_ASSOC),
+    '/': (5, LEFT_ASSOC),
+    '%': (5, LEFT_ASSOC),
     '^': (10, RIGHT_ASSOC)
 }
+# OPERATORS = {
+#     '(': (0, LEFT_ASSOC),
+#     'if': (0, LEFT_ASSOC),
+#     'iterate': (0, LEFT_ASSOC),
+#     'else': (0, LEFT_ASSOC),
+#     ')': (2, LEFT_ASSOC),
+#     'finish': (2, LEFT_ASSOC),
+#     '=': (3, LEFT_ASSOC),
+#     'var': (4, LEFT_ASSOC),
+#     '<': (5, LEFT_ASSOC),
+#     '>': (5, LEFT_ASSOC),
+#     '<=': (5, LEFT_ASSOC),
+#     '>=': (5, LEFT_ASSOC),
+#     '!=': (5, LEFT_ASSOC),
+#     '+': (6, LEFT_ASSOC),
+#     '-': (6, LEFT_ASSOC),
+#     '*': (8, LEFT_ASSOC),
+#     '/': (8, LEFT_ASSOC),
+#     '%': (8, LEFT_ASSOC),
+#     '^': (10, RIGHT_ASSOC)
+# }
+
 
 def isOperator(token):
     return token in OPERATORS.keys()
@@ -49,7 +58,7 @@ def infixToRPN(tokens):
             while len(stack) != 0 and isOperator(stack[-1]):
                 if (isAssociative(token, LEFT_ASSOC)
                     and cmpPrecedence(token, stack[-1]) <= 0) or (isAssociative(token, RIGHT_ASSOC)
-                     and cmpPrecedence(token, stack[-1]) < 0):
+                                                                  and cmpPrecedence(token, stack[-1]) < 0):
                     out.append(stack.pop())
                     continue
                 break
@@ -70,15 +79,22 @@ def infixToRPN(tokens):
 
 if __name__ == '__main__':
     #input = "1 + 2 * ( 3 / 4 ) ^ ( 5 + 6 )".split(" ")
-    input = "var a = 10 ; " \
-            "iterate a times " \
-            "if a < 109 " \
-            "a = a + 111 ; " \
-            "else " \
-            "var z = 10 ; " \
-            "end ; " \
-            "finish " \
-            "var za = 10 ; "
+    # input = "var a = 10 ; " \
+    #         "iterate a times " \
+    #         "if a < 109 " \
+    #         "a = a + 111 ; " \
+    #         "else " \
+    #         "var z = 10 ; " \
+    #         "end ; " \
+    #         "finish " \
+    #         "var za = 10 ; "
+    # input = "var d = 1 ; " \
+    #         "iterate 10 times " \
+    #         "d = d + 1 ; " \
+    #         "if c < 10 " \
+    #         "c = c + 2 ; " \
+    #         "finish "
+    input = "3 + 4 * 2 / ( 1 - 5 ) ^ 2"
     input = input.split(" ")
     output = infixToRPN(input)
-    print(output)
+    print(output,)

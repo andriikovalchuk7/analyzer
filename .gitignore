@@ -1,3 +1,5 @@
 ./file.txt
 /.idea
 /csv
+['a', 'var', '10', '=', 'a', 'times', 'iterate', 'a', '109', 'a', '<', 'a', '111', 'else', '+', 'z', 'var', '=', '10', 'end', '=', 'za', 'var', '10', '', '=', 'finish', 'if']
+['a', 'var', '10', '=', 'a', 'iterate', 'times', 'a', '109', 'a', '<', 'a', '111', 'else', '+', 'z', 'var', '=', '10', 'end', '=', 'za', 'var', '10', '', '=', 'finish', 'if']
