@@ -19,7 +19,6 @@ def parse(file):
     const_hash = []
     lexem_hash = []
     codes_list = merge_codes()
-    delimiter = False
     for row in program:
         current_row = current_row + 1
         row = check_if_delimiter_presented(row)
@@ -39,7 +38,7 @@ def parse(file):
                 if op.operators.count(lexem) != 0:
                     lexem_hash.append([row_number, lexem, str(op.codes.index(lexem)), ' '])
                     continue
-                if re.match(op.numerals, lexem):
+                if lexem.isdigit():
                     id = identifier_id(const_hash, lexem)
                     const_hash.append([id, lexem])
                     lexem_hash.append([row_number, lexem, str(op.codes.index('con')), id])
@@ -50,7 +49,7 @@ def parse(file):
                     lexem_hash.append([row_number, lexem, str(op.codes.index('id')), id])
         if delimiter:
             lexem_hash.append([row_number, ';', str(op.codes.index(';')), ' '])
-    sa.syntax_analyzer(program, lexem_hash, identifier_hash, const_hash)
+    sa.syntax_analyzer(lexem_hash, identifier_hash)
     xls_write(lexem_hash, identifier_hash, const_hash)
 
 
@@ -67,21 +66,19 @@ def xls_write(lexem_hash,identifier_hash,const_hash):
         writer = csv.writer(writeFile)
         writer.writerows(array_consts)
         writer.writerows(const_hash)
-    #merge_all_to_a_book(glob.glob("csv\\lexems.csv"), "xls\\lexems.xlsx")
-    #merge_all_to_a_book(glob.glob("csv\\identifiers.csv"), "xls\\identifiers.xlsx")
-    #merge_all_to_a_book(glob.glob("csv\\consts.csv"), "xls\\consts.xlsx")
+    merge_all_to_a_book(glob.glob("csv\\lexems.csv"), "xls\\lexems.xlsx")
+    merge_all_to_a_book(glob.glob("csv\\identifiers.csv"), "xls\\identifiers.xlsx")
+    merge_all_to_a_book(glob.glob("csv\\consts.csv"), "xls\\consts.xlsx")
 
 
 def identifier_id(hash, lexem):
-    iterator = 0
     identificator = 0
-    for i in hash:
-        current_hash = hash[iterator]
+    for i in range(len(hash) - 1):
+        current_hash = hash[i]
         if current_hash.count(lexem) != 0:
-            return hash.index(i)
+            return current_hash[0]
         else:
-            identificator = len(hash)
-        iterator = iterator + 1
+            identificator = current_hash[0] + 1
     return identificator
 
 

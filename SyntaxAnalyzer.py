@@ -1,10 +1,8 @@
 import re
 import operators as op
 
-variables = {}
 
-
-def syntax_analyzer(program, lexem_hash, identifier_hash, const_hash):
+def syntax_analyzer(lexem_hash, identifier_hash):
     identifiers = []
     for i in range(0, len(lexem_hash) - 1):
         lexem = lexem_hash[i][1]
@@ -14,7 +12,7 @@ def syntax_analyzer(program, lexem_hash, identifier_hash, const_hash):
             if logical_expression_exists(lexem_hash, i, identifier_hash):
                 if seek_for_end_statement(lexem_hash, i):
                     i = find_next_row_start(lexem_hash, lexem_hash[i][0], i)
-                    continue
+                    break
                 else:
                     print(f"Invalid if statement on row {lexem_hash[i][0]}")
                     return
@@ -223,13 +221,3 @@ def find_next_row_start(lexem_hash, current_row, current_index):
     for i in range(current_index, len(lexem_hash)-1):
         if int(lexem_hash[i][0]) > int(current_row):
             return int(lexem_hash[i][0])
-
-
-# def identifier_list_lookup(identifier_hash, identifier):
-#     for i in range(0, len(identifier_hash) - 1):
-#         current_id = identifier_hash[i][1]
-#         if identifier == current_id:
-#             return True
-#     return False
-
-
