@@ -1,4 +1,3 @@
-
 LEFT_ASSOC = 0
 RIGHT_ASSOC = 1
 # OPERATORS = {
@@ -12,10 +11,9 @@ RIGHT_ASSOC = 1
 OPERATORS = {
     'if': (0, LEFT_ASSOC),
     'iterate': (0, LEFT_ASSOC),
-    'else': (1, LEFT_ASSOC),
-    'finish': (1, LEFT_ASSOC),
+    'else': (0, LEFT_ASSOC),
+    'finish': (0, LEFT_ASSOC),
     '=': (2, LEFT_ASSOC),
-    'var': (3, LEFT_ASSOC),
     '<': (4, LEFT_ASSOC),
     '>': (4, LEFT_ASSOC),
     '<=': (4, LEFT_ASSOC),
@@ -78,23 +76,15 @@ def infixToRPN(tokens):
 
 
 if __name__ == '__main__':
-    #input = "1 + 2 * ( 3 / 4 ) ^ ( 5 + 6 )"
-    input = "var a = 10 ; " \
-            "iterate a times " \
-            "if a < 109 " \
-            "a = a + 111 ; " \
-            "else " \
-            "var z = 10 + 1 * 12 ; " \
-            "end ; " \
-            "finish " \
-            "var za = 10 ; "
+    # input = "1 + 2 * ( 3 / 4 ) ^ ( 5 + 6 )"
+    input = "a * c ^ k / p - q * g ^ ( n - b ) "
     # input = "var d = 1 ; " \
     #         "iterate 10 times " \
     #         "d = d + 1 ; " \
     #         "if c < 10 " \
     #         "c = c + 2 ; " \
     #         "finish "
-    #input = "3 + 4 * 2 / ( 1 - 5 ) ^ 2"
+    # input = "3 + 4 * 2 / ( 1 - 5 ) ^ 2"
     input = input.split(" ")
     output = infixToRPN(input)
     print(output)
