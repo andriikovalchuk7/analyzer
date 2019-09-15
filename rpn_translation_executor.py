@@ -13,6 +13,7 @@ OPERATORS = {
     'iterate': (0, LEFT_ASSOC),
     'else': (0, LEFT_ASSOC),
     'finish': (0, LEFT_ASSOC),
+    'var': (10, RIGHT_ASSOC),
     '=': (2, LEFT_ASSOC),
     '<': (4, LEFT_ASSOC),
     '>': (4, LEFT_ASSOC),
@@ -77,7 +78,7 @@ def infixToRPN(tokens):
 
 if __name__ == '__main__':
     # input = "1 + 2 * ( 3 / 4 ) ^ ( 5 + 6 )"
-    input = "a * c ^ k / p - q * g ^ ( n - b ) "
+    input = "var f = a * c ^ k / p - q * g ^ ( n - b ) "
     # input = "var d = 1 ; " \
     #         "iterate 10 times " \
     #         "d = d + 1 ; " \

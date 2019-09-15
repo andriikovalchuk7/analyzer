@@ -1,7 +1,7 @@
 var a = 10;
 iterate a times
 if a < 109
-    a = a + 111;
+    a = a + 111 ;
 end;
 finish
 var za = 10;

@@ -12,6 +12,7 @@ ops = {
     '+': OpInfo(prec=2, assoc=L),
     '-': OpInfo(prec=2, assoc=L),
     '(': OpInfo(prec=9, assoc=L),
+    'var': OpInfo(prec=10, assoc=R),
     ')': OpInfo(prec=0, assoc=L),
 }
 
@@ -19,8 +20,6 @@ NUM, LPAREN, RPAREN = 'NUMBER ( )'.split()
 
 
 def get_input(inp=None):
-    'Inputs an expression and returns list of (TOKENTYPE, tokenvalue)'
-
     if inp is None:
         inp = input('expression: ')
     tokens = inp.strip().split()
@@ -92,7 +91,7 @@ def shunting(tokenvals):
 
 
 if __name__ == '__main__':
-    infix = 'f = a * c ^ k / p - q * g ^ ( n - b ) '
+    infix = 'var f = a * c ^ k / p - q * g ^ ( n - b ) '
     print('For infix expression: %r\n' % infix)
     rp = shunting(get_input(infix))
     maxcolwidths = [len(max(x, key=len)) for x in zip(*rp)]
