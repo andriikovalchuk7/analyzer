@@ -49,7 +49,30 @@ def syntax_analyzer(lexem_hash, identifier_hash):
                 print(iterate_check)
                 return
         if lexem.isdigit():
-            continue
+            previous_lexem = lexem_hash[i - 1][1]
+            next_lexem = lexem_hash[i + 1][1]
+            if op.logical_operators.count(previous_lexem) == 0:
+                if op.mathematical_operators.count(previous_lexem) == 0:
+                    if previous_lexem != '=' and previous_lexem != 'iterate':
+                        print(f"Invalid statement on row {lexem_hash[i][0]}")
+                        return
+            if op.mathematical_operators.count(next_lexem) == 0 and next_lexem != ';' and next_lexem != 'times' :
+                print(f"Invalid statement on row {lexem_hash[i][0]}")
+                return
+        if lexem in op.logical_operators:
+            previous_lexem = lexem_hash[i - 1][1]
+            next_lexem = lexem_hash[i + 1][1]
+            if lexem_hash[i - 2][1] != 'if':
+                print(f"Invalid logical operation on row {lexem_hash[i][0]}")
+                return
+            if identifiers.count(previous_lexem) == 0:
+                if not previous_lexem.isdigit():
+                    print(f"Invalid logical operation on row {lexem_hash[i][0]}")
+                    return
+            if identifiers.count(next_lexem) == 0:
+                if not next_lexem.isdigit():
+                    print(f"Invalid logical operation on row {lexem_hash[i][0]}")
+                    return
         if lexem == '=':
             previous_lexem = lexem_hash[i - 1][1]
             next_lexem = lexem_hash[i + 1][1]

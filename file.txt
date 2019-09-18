@@ -1,9 +1,10 @@
 var a = 10 ;
-if a < 10
-a  =  11 +  11 ;
+var sss = 11;
+if a < a
+  a =  11 + 11 ;
 end;
 var za = 10;
 var d = 1 ;
 iterate 10 times
-    d =  d + 1 ;
+    d = d + 1;
 finish
