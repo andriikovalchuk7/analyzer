@@ -12,7 +12,7 @@ def syntax_analyzer(lexem_hash, identifier_hash):
             if logical_expression_exists(lexem_hash, i, identifier_hash):
                 if seek_for_end_statement(lexem_hash, i):
                     i = find_next_row_start(lexem_hash, lexem_hash[i][0], i)
-                    break
+                    continue
                 else:
                     print(f"Invalid if statement on row {lexem_hash[i][0]}")
                     return
@@ -23,7 +23,7 @@ def syntax_analyzer(lexem_hash, identifier_hash):
             if seek_for_if_statement(lexem_hash, i):
                 continue
             else:
-                print(f"Missing end statement on row {lexem_hash[i][0]}")
+                print(f"Missing if statement on row {lexem_hash[i][0]}")
                 return
         if lexem == 'else':
             if seek_for_else(lexem_hash, i):
@@ -50,8 +50,35 @@ def syntax_analyzer(lexem_hash, identifier_hash):
                 return
         if lexem.isdigit():
             continue
-        if lexem in op.operators:
-            continue
+        if lexem == '=':
+            previous_lexem = lexem_hash[i - 1][1]
+            next_lexem = lexem_hash[i + 1][1]
+            if next_lexem == ';':
+                print(f"Invalid assignment operation on row {lexem_hash[i][0]}")
+                return
+            if not identifier_exists(previous_lexem, identifier_hash):
+                print(f"Invalid assignment operation on row {lexem_hash[i][0]}")
+                return
+            if op.operators.count(next_lexem) != 0:
+                print(f"Invalid assignment operation on row {lexem_hash[i][0]}")
+                return
+        if lexem in op.mathematical_operators:
+            previous_lexem = lexem_hash[i - 1][1]
+            next_lexem = lexem_hash[i + 1][1]
+            if op.operators.count(next_lexem) != 0:
+                print(f"Invalid operation on row {lexem_hash[i][0]}")
+                return
+            if identifiers.count(next_lexem):
+                if not identifier_declared(i + 1, lexem_hash):
+                    print(f"Invalid operation on row {lexem_hash[i][0]}")
+                    return
+            if identifiers.count(previous_lexem) == 0:
+                if not previous_lexem.isdigit():
+                    print(f"Invalid operation on row {lexem_hash[i][0]}")
+                    return
+            if next_lexem == ';':
+                print(f"Invalid operation on row {lexem_hash[i][0]}")
+                return
         if identifier_exists(lexem, identifier_hash):
             if not identifier_declared(i, lexem_hash):
                 if identifiers.count(lexem) == 0:

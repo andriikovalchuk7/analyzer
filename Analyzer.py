@@ -50,10 +50,10 @@ def parse(file):
         if delimiter:
             lexem_hash.append([row_number, ';', str(op.codes.index(';')), ' '])
     sa.syntax_analyzer(lexem_hash, identifier_hash)
-    xls_write(lexem_hash, identifier_hash, const_hash)
+    #xls_write(lexem_hash, identifier_hash, const_hash)
 
 
-def xls_write(lexem_hash,identifier_hash,const_hash):
+def xls_write(lexem_hash, identifier_hash, const_hash):
     with open('csv\\lexems.csv', 'w') as writeFile:
         writer = csv.writer(writeFile)
         writer.writerows(array_lexems)
@@ -71,14 +71,26 @@ def xls_write(lexem_hash,identifier_hash,const_hash):
     merge_all_to_a_book(glob.glob("csv\\consts.csv"), "xls\\consts.xlsx")
 
 
+# def identifier_id(hash, lexem):
+#     identificator = 0
+#     for i in range(len(hash) - 1):
+#         current_hash = hash[i]
+#         if current_hash.count(lexem) != 0:
+#             return current_hash[0]
+#         else:
+#             identificator = current_hash[0] + 1
+#     return identificator
+
 def identifier_id(hash, lexem):
+    iterator = 0
     identificator = 0
-    for i in range(len(hash) - 1):
-        current_hash = hash[i]
+    for i in hash:
+        current_hash = hash[iterator]
         if current_hash.count(lexem) != 0:
-            return current_hash[0]
+            return hash.index(i)
         else:
-            identificator = current_hash[0] + 1
+            identificator = len(hash)
+        iterator = iterator + 1
     return identificator
 
 
@@ -108,7 +120,7 @@ def check_if_delimiter_presented(row):
         return row
     if row.find('else') != -1:
         return row
-    if row.find(';') != -1 and row[len(row)-1] is ';':
+    if row.find(';') != -1 and row[len(row) - 1] is ';':
         row = row.strip(';')
         return row
     else:

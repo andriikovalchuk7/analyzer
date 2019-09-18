@@ -1,14 +1,9 @@
-var a = 10;
-iterate a times
-if a < 109
-    a = a + 111 ;
+var a = 10 ;
+if a < 10
+a  =  11 +  11 ;
 end;
-finish
 var za = 10;
 var d = 1 ;
-var c = 1 ;
 iterate 10 times
-    d = d + 1 ;
-    if c < 10
-        c = c + 2 ;
+    d =  d + 1 ;
 finish
